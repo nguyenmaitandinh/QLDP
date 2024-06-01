@@ -72,5 +72,8 @@ class HomeController extends BaseController{
     public function phong(){
         $this->view('layout.fontend.phong', '');
     }
+    public function chitiet(){
+        $this->view('layout.fontend.chitiet','');
+    }
    
 } 

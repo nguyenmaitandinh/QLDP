@@ -15,7 +15,39 @@
         <link rel="stylesheet" href="./public/vendors/owl-carousel/owl.carousel.min.css">
         <!-- main css -->
         <link rel="stylesheet" href="./public/css/style.css">
+        <link rel="stylesheet" href="./public/css/styles.css">
         <link rel="stylesheet" href="./public/css/responsive.css">
+        <style>
+    .portfolio-box {
+        position: relative;
+        display: block;
+        margin-bottom: 30px;
+        overflow: hidden; /* Để ẩn phần hình ảnh bị cắt bớt */
+    }
+    .portfolio-box img {
+        width: 100%;
+        height: 200px; /* Chiều cao cố định */
+        object-fit: cover; /* Cắt bớt hình ảnh để vừa khung */
+        border-radius: 5px;
+    }
+    .portfolio-box-caption {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        width: 100%;
+        padding: 20px;
+        border-radius: 0 0 5px 5px;
+        text-align: center;
+    }
+    .portfolio-box-caption .project-category {
+        font-size: 14px;
+    }
+    .portfolio-box-caption .project-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
     </head>
     <body>
         <!--================Header Area =================-->
@@ -28,10 +60,7 @@
             <div class="container">
                 <div class="page-cover text-center">
                     <h2 class="page-cover-tittle">Phòng</h2>
-                    <ol class="breadcrumb">
-                        <li><a href="index.html">Trang Chủ</a></li>
-                        <li class="active">Phòng</li>
-                    </ol>
+                
                 </div>
             </div>
         </section>
@@ -44,48 +73,39 @@
                     <h2 class="title_color">Special Accomodation</h2>
                     <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
                 </div>
-                <div class="row mb_30">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room1.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                <div id="portfolio">
+    <div class="container-fluid p-4">
+        <div class="row">
+            <?php 
+            include 'admin/db_connect.php';
+            $qry = $conn->query("SELECT * FROM room_categories ORDER BY RAND()");
+            while($row = $qry->fetch_assoc()):
+            ?>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <a class="portfolio-box" href="#">
+                    <img class="img-fluid" src="assets/img/<?php echo $row['cover_img']; ?>" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50 mt-3"><?php echo "$ " . number_format($row['price'], 2); ?> per day</div>
+                        <div class="project-name"><?php echo $row['name']; ?></div>
+                        <div class="col mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="?c=room&a=chitiet&id=<?php echo $row['id'];?>" class="prod-img">
+                                        <button type="button" class="btn btn-success">Chi tiết</button>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-info">Đặt Phòng</button>
+                                </div>
                             </div>
-                            <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                            <h5>$250<small>/night</small></h5>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room2.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room3.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                            <h5>$750<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room4.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                </div>
+                </a>
+            </div>
+            <?php endwhile; ?>
+        </div>
+    </div>
+</div>
             </div>
         </section>
         <!--================ Accomodation Area  =================-->
