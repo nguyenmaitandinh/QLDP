@@ -31,7 +31,7 @@
         }
         .portfolio-box img {
             width: 100%;
-            height: 200px; /* Chiều cao cố định */
+            height:250px; /* Chiều cao cố định */
             object-fit: cover; /* Cắt bớt hình ảnh để vừa khung */
             border-radius: 5px;
         }
@@ -67,24 +67,27 @@
                     <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast, </p>
                 </div>
                 <div id="portfolio">
-                    <div class="container-fluid p-4">
-                        <div class="row">
-                            <?php 
-                            include 'admin/db_connect.php';
-                            $qry = $conn->query("SELECT * FROM room_categories ORDER BY RAND()");
-                            while($row = $qry->fetch_assoc()):
-                            ?>
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <a class="portfolio-box" href="#">
-                                    <img class="img-fluid" src="assets/img/<?php echo $row['cover_img']; ?>" alt="" />
-                                    <div class="portfolio-box-caption">
-                                        <div class="project-category text-white-50"><?php echo "$ " . number_format($row['price'], 2); ?> per day</div>
-                                        <div class="project-name"><?php echo $row['name']; ?></div>
-                                    </div>
-                                </a>
-                            </div>
-                            <?php endwhile; ?>
+                <div class="container-fluid p-4">
+                    <div class="row">
+                        <?php 
+                        include 'admin/db_connect.php';
+                        $qry = $conn->query("SELECT * FROM room_categories ORDER BY RAND()");
+                        while($row = $qry->fetch_assoc()):
+                        ?>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <a href="?c=room&a=chitiet&id=<?php echo $row['id'];?>" class="portfolio-box card shadow-sm text-decoration-none">
+                                <div class="image-container">
+                                    <img class="card-img-top img-fluid" src="assets/img/<?php echo $row['cover_img']; ?>" alt="Room Image" />
+                                </div>
+                                <div class="portfolio-box-caption card-body">
+                                    <div class="project-category text-muted mb-2"><?php echo "$ " . number_format($row['price'], 2); ?> per day</div>
+                                    <div class="project-name card-title h5"><?php echo $row['name']; ?></div>
+                                </div>
+                            </a>
+                            
                         </div>
+
+                        <?php endwhile; ?>
                     </div>
                 </div>
         </div>

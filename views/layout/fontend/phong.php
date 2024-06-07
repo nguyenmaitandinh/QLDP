@@ -18,35 +18,52 @@
         <link rel="stylesheet" href="./public/css/styles.css">
         <link rel="stylesheet" href="./public/css/responsive.css">
         <style>
-    .portfolio-box {
-        position: relative;
-        display: block;
-        margin-bottom: 30px;
-        overflow: hidden; /* Để ẩn phần hình ảnh bị cắt bớt */
-    }
-    .portfolio-box img {
-        width: 100%;
-        height: 200px; /* Chiều cao cố định */
-        object-fit: cover; /* Cắt bớt hình ảnh để vừa khung */
-        border-radius: 5px;
-    }
-    .portfolio-box-caption {
-        position: absolute;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        width: 100%;
-        padding: 20px;
-        border-radius: 0 0 5px 5px;
-        text-align: center;
-    }
-    .portfolio-box-caption .project-category {
-        font-size: 14px;
-    }
-    .portfolio-box-caption .project-name {
-        font-size: 18px;
-        font-weight: bold;
-    }
+ .portfolio-box {
+    transition: transform 0.3s ease;
+}
+
+.portfolio-box:hover {
+    transform: scale(1.05);
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* Adjust this percentage to change the aspect ratio */
+    overflow: hidden;
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.portfolio-box-caption {
+    padding: 1rem;
+}
+
+.card-footer {
+    padding: 0.75rem 1rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+}
+b{
+    color: black;
+}
+
+
 </style>
     </head>
     <body>
@@ -67,209 +84,84 @@
         <!--================Breadcrumb Area =================-->
         
         <!--================ Accomodation Area  =================-->
-        <section class="accomodation_area section_gap">
-            <div class="container">
+        <section class="page-section bg-light">
+		
+		<div class="container ">	
+        <div class="container">
                 <div class="section_title text-center">
                     <h2 class="title_color">Special Accomodation</h2>
                     <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
                 </div>
-                <div id="portfolio">
-    <div class="container-fluid p-4">
-        <div class="row">
-            <?php 
-            include 'admin/db_connect.php';
-            $qry = $conn->query("SELECT * FROM room_categories ORDER BY RAND()");
-            while($row = $qry->fetch_assoc()):
-            ?>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <a class="portfolio-box" href="#">
-                    <img class="img-fluid" src="assets/img/<?php echo $row['cover_img']; ?>" alt="" />
-                    <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50 mt-3"><?php echo "$ " . number_format($row['price'], 2); ?> per day</div>
-                        <div class="project-name"><?php echo $row['name']; ?></div>
-                        <div class="col mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a href="?c=room&a=chitiet&id=<?php echo $row['id'];?>" class="prod-img">
-                                        <button type="button" class="btn btn-success">Chi tiết</button>
-                                    </a>
+				<div class="col-lg-12">	
+						<div class="card">
+							<div class="card-body">	
+									<form action="index.php?page=list" id="filter" method="POST">
+			        					<div class="row">
+			        						<div class="col-md-3">
+			        							<label for="">Chech-in Date</label>
+			        							<input type="text" class="form-control datepicker" name="date_in" autocomplete="off" value="<?php echo isset($date_in) ? date("Y-m-d",strtotime($date_in)) : "" ?>">
+			        						</div>
+			        						<div class="col-md-3">
+			        							<label for="">Chech-out Date</label>
+			        							<input type="text" class="form-control datepicker" name="date_out" autocomplete="off" value="<?php echo isset($date_out) ? date("Y-m-d",strtotime($date_out)) : "" ?>">
+			        						</div>
+			        						<div class="col-md-3">
+			        							<br>
+			        							<button class="btn-btn-block btn-primary mt-3">Check Availability</button>
+			        						</div>
+
+			        					</div>
+			        				</form>
+							</div>
+						</div>	
+
+						<hr>	
+						
+                        <?php 
+                        include 'admin/db_connect.php';
+                        $qry = $conn->query("SELECT * FROM room_categories ORDER BY RAND()");
+                        while($row = $qry->fetch_assoc()):
+                        ?>
+						<div class="card item-rooms mb-3">
+							<div class="card-body">
+								<div class="row">
+                                    <div class="col-md-5">
+                                        <img class="card-img-top img-fluid" src="assets/img/<?php echo $row['cover_img']; ?>" alt="Room Image" />
+                                    </div>
+                                    <div class="col-md-5" height="100%">
+                                        <h4 class="mt-4"><b> Giá Phòng : <?php echo "$" . number_format($row['price'], 2); ?> </b><span> </span></h3>
+                                            <br>
+                                        <h4><b>
+                                        Tên Phòng : <?php echo $row['name']; ?>
+                                        </b></h4>
+                                
+                                    </div>
+                                    <div class="col-md-2">  
+
+                                        <div class="align-self-end mt-5  w-100">
+                                            <a href="#" class="btn btn-info btn-block">Đặt Phòng</a>
+                                        </div><br>
+                                        <div class="align-self-end   w-100">
+                                            <a href="?c=room&a=chitiet&id=<?php echo $row['id'];?>" class="btn btn btn-outline-success btn-block">Chi tiết</a>
+                                        </div>
+
+                                       
+                                    
+                                    </div>
+                                
                                 </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-info">Đặt Phòng</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <?php endwhile; ?>
-        </div>
-    </div>
-</div>
-            </div>
-        </section>
+							</div>
+
+						
+						</div>
+						<?php endwhile; ?>
+				</div>	
+		</div>	
+</section>
+      
         <!--================ Accomodation Area  =================-->
         <!--================Booking Tabel Area =================-->
-        <section class="hotel_booking_area">
-            <div class="container">
-                <div class="row hotel_booking_table">
-                    <div class="col-md-3">
-                        <h2>Book<br> Your Room</h2>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="boking_table">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                        <div class="form-group">
-                                            <div class='input-group date' id='datetimepicker11'>
-                                                <input type='text' class="form-control" placeholder="Arrival Date"/>
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control" placeholder="Departure Date"/>
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                        <div class="input-group">
-                                            <select class="wide">
-                                                <option data-display="Adult">Adult</option>
-                                                <option value="1">Old</option>
-                                                <option value="2">Younger</option>
-                                                <option value="3">Potato</option>
-                                            </select>
-                                        </div>
-                                        <div class="input-group">
-                                            <select class="wide">
-                                                <option data-display="Child">Child</option>
-                                                <option value="1">Child</option>
-                                                <option value="2">Baby</option>
-                                                <option value="3">Child</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                        <div class="input-group">
-                                            <select class="wide">
-                                                <option data-display="Child">Number of Rooms</option>
-                                                <option value="1">Room 01</option>
-                                                <option value="2">Room 02</option>
-                                                <option value="3">Room 03</option>
-                                            </select>
-                                        </div>
-                                        <a class="book_now_btn button_hover" href="#">Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--================Booking Tabel Area  =================-->
-        <!--================ Accomodation Area  =================-->
-        <section class="accomodation_area section_gap">
-            <div class="container">
-                <div class="section_title text-center">
-                    <h2 class="title_color">Normal Accomodation</h2>
-                    <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
-                </div>
-                <div class="row accomodation_two">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room1.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                            <h5>$250<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room2.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room3.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                            <h5>$750<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room4.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room1.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                            <h5>$250<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room2.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room3.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                            <h5>$750<small>/night</small></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="accomodation_item text-center">
-                            <div class="hotel_img">
-                                <img src="./public/image/room4.jpg" alt="">
-                                <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                            </div>
-                            <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                            <h5>$200<small>/night</small></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+      
         <?php require_once('./views/layout/fontend/footer.php');?>
         <script src="./public/js/jquery-3.2.1.min.js"></script>
         <script src="./public/js/popper.js"></script>
