@@ -49,7 +49,7 @@
             <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
             <div class="container">
                 <div class="page-cover text-center">
-                    <h2 class="page-cover-tittle">Chi Tiết </h2>
+                    <h2 class="page-cover-tittle">Đặt Phòng</h2>
                     <ol class="breadcrumb">
                         
                         
@@ -67,17 +67,50 @@
     $result = $qry->get_result();
     while($row = $result->fetch_assoc()):
     ?>
+   <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-6">
-            <img class="img-fluid" src="assets/img/<?php echo htmlspecialchars($row['cover_img']); ?>" alt="Project Cover Image" />
+      <div class="col-lg-6 mb-4">
+        <img class="img-fluid rounded" src="assets/img/<?php echo htmlspecialchars($row['cover_img']); ?>" alt="Project Cover Image" />
+      </div>
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            
+          <form method="post" action="">
+            <div class="row mb-3">
+            <div class="project-name text-center"><h4><?php echo htmlspecialchars($row['name']); ?></h4></div>
+            <div class="project-category mt-1 mb-1 text-center"><h6 class="text-danger"><?php echo "$ " . number_format($row['price'], 2); ?> per day</h6></div>
+            <div class="col-md-6">
+            <label for="name" class="form-label">Tên</label>
+            <input type="text" class="form-control" id="name" name="ten" placeholder="Nhập tên của bạn" required>
         </div>
-        <div class="col-lg-6">
-            <div class="project-name"><h4><?php echo htmlspecialchars($row['name']); ?></h4></div>
-            <div class="project-category mt-1 mb-1"><h6 class="text-danger"><?php echo "$ " . number_format($row['price'], 2); ?> per day</h6></div>
-            <p><strong>Description:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod mattis dolor eget lobortis.</p>
-            <a href="?c=room&a=roombook&id=<?php echo $row['id'];?>" class="btn btn-info btn-block w-25">Đặt Phòng</a>
+        <div class="col-md-6">
+            <label for="phone" class="form-label">Số Điện Thoại</label>
+            <input type="tel" class="form-control" id="phone" name="sodienthoai" placeholder="Nhập số điện thoại của bạn" required>
         </div>
     </div>
+    <div class="mb-3">
+        <label for="diachi" class="form-label">Địa Chỉ</label>
+        <input type="text" class="form-control" id="diachi" name="diachi" placeholder="Nhập địa chỉ của bạn" required>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label for="checkin" class="form-label">Ngày Nhận Phòng</label>
+            <input type="date" class="form-control" id="checkin" name="checkin" required>
+        </div>
+        <div class="col-md-6">
+            <label for="checkout" class="form-label">Ngày Trả Phòng</label>
+            <input type="date" class="form-control" id="checkout" name="checkout" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100 mt-3">Đặt Phòng</button>
+          </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <?php endwhile; ?>
 </div>

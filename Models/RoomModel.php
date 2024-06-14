@@ -16,6 +16,13 @@ class RoomModel {
         $room = $data->fetchAll();
         return $room;
     }
+
+    public function BookRoom($ten, $sodienthoai, $diachi, $checkin, $checkout) {
+        $sql = "INSERT INTO roombook (ten, sodienthoai, diachi, checkin, checkout) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute([$ten, $sodienthoai, $diachi, $checkin, $checkout]);
+    }
 }
+
 
 ?>
