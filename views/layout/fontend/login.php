@@ -145,25 +145,32 @@
     </style>
 </head>
 <body>
-    <div>
-        
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <form action="?c=home&a=dangnhap" method="POST">
+                    <h3 class="mb-3">Đăng Nhập</h3>
+                   
+                    <div class="mb-3">
+                        <label for="us" class="form-label">Tên Đăng Nhập</label>
+                        <input type="text" class="form-control" id="us" name="us" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pa" class="form-label">Mật Khẩu</label>
+                        <input type="password" class="form-control" id="pa" name="pa" required>
+                    </div>
+                    <?php if(isset($error)): ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php echo $error; ?>
+                                    </div>
+                                <?php endif; ?>
+                    <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                    <p class="mt-3">Không phải là thành viên? <a href="?c=home&a=dangky">Đăng Ký</a></p>
+                </form>
+            </div>
+        </div>
     </div>
-    <form autocomplete="off">
-        <h3>Đăng Nhập</h3>
-        <div class="form-group " action="" method="POST">
-            <label for="username">Tên Đăng Nhập</label>
-            <input type="text" class="form-control" placeholder="Email or Phone"  name="us" autocomplete="new-username" />
-        </div>
-        <div class="form-group">
-            <label for="password">Mật Khẩu</label>
-            <input type="password" class="form-control" placeholder="Password"  name="pa" autocomplete="new-password" />
-        </div>
-        <button  type="submit" class="btn btn-primary mt-4" >Đăng Nhập</button>
-        <p class="mt-2">Không Phải Là Thành viên ?<a href="?c=home&a=dangky"> Đăng Ký</a></p>
-        <div class="social">
-            <div class="go"><i class="fab fa-google"></i> Google</div>
-            <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
-        </div>
-    </form>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

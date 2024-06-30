@@ -19,7 +19,6 @@
         function CheckUser($tenhk) {
             $db = new DB();
             $select = "SELECT * FROM khachhang WHERE tenhk='$tenhk'";
-            $result = $db->getInstance($select);
             return $result ? true : false;
         }
         
